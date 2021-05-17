@@ -1,0 +1,193 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/Assets/style.css" />
+</head>
+
+
+<body>
+    <div id="loaderparent" style="display:none">
+        <div class="loader">
+        </div>
+    </div>
+    <div class="modal fade" id="addNewModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Modal Heading</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form id="addNewStudentForm">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" name="name" id="newName" class="form-control" placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email address:</label>
+                            <input type="email" class="form-control" id="newMail" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <label for="disc">Discipline</label>
+                            <select id="addnewStudentDeipdown" name="disc" style="width:100%;text-align:center">
+
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="productDetailsModal" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="my-modal-title"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="my-modal-title">
+                        <h4>Product Details</h4>
+                    </h5>
+                    <button class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <table class="table table-hover">
+
+                        <tbody id="renderProductDetails">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <h5>Customers</h5>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Roll</th>
+                                <th>Discipline</th>
+                                <th>Offered</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customersList">
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="main">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewModal">
+                Add new
+            </button>
+
+            <!-- The Modal -->
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Roll</th>
+                    </tr>
+                </thead>
+                <tbody id="detailsList">
+                    <tr>
+                        <td>Loading...</td>
+                        <td>Loading...</td>
+                        <td>Loading...</td>
+                        <td>
+                            <button type="button" class="btn btn-primary">Details</button>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <div class="container ml-4" style="align-items:center">
+        <div class="card">
+            <div id="mySidebar" class="sidebar" style="overflow-y:scroll">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                <h4>Details</h4>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Roll</th>
+                            <th>Discipline</th>
+                        </tr>
+                    </thead>
+                    <tbody id="DetailsTable">
+                    </tbody>
+                </table>
+                <hr>
+                <h3>Products Owned</h3>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="DetailsProductsTable">
+                    </tbody>
+                </table>
+
+                <footer>
+                    <h4>Add new product</h4>
+                    <button class="btn btn-primary" data-target="#addProductCollapse" data-toggle="collapse"
+                        aria-expanded="false" aria-controls="addProductCollapse">
+                        Add new product
+                    </button>
+                    <div id="addProductCollapse" class="collapse">
+                        <form id="addNewProductMorm" class="form-inline">
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input type="text" name="name" id="newProductName" class="form-control"
+                                    placeholder="Name">
+                            </div>
+
+
+                            <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                        </form>
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+<script src="~/Assets/app.js"></script>
