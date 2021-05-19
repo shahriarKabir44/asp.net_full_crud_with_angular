@@ -9,9 +9,10 @@ namespace CrudApp2.Repositories
     public class Repository<T> where T:class
     {
         public MarketPlaceEntities2 context;
-        public Repository()
+        public Repository(MarketPlaceEntities2 baseContext)
         {
-            this.context = new MarketPlaceEntities2();
+            System.Diagnostics.Debug.WriteLine("Repository");
+            this.context = baseContext ?? throw new ArgumentNullException(nameof(baseContext));
         }
         public void Delete(int Id)
         {
@@ -37,10 +38,11 @@ namespace CrudApp2.Repositories
             return entity;
         }
 
-        public void Update(T entity)
+        public T Update(T entity)
         {
             this.context.Entry(entity).State = EntityState.Modified;
             this.context.SaveChanges();
+            return entity;
         }
     }
 }

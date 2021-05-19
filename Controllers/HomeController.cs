@@ -5,44 +5,35 @@ using System.Web;
 using System.Web.Mvc;
 using CrudApp2.Repositories;
 using CrudApp2.Models;
+
 namespace CrudApp2.Controllers
 {
-    public class HomeController : Controller
+
+    public class HomeController : BaseController
     {
-        
-        StudentRepository stdrep = new StudentRepository();
-        DisciplineRepository dsp = new DisciplineRepository();
+
+        StudentRepository studentRepository;
+        DisciplineRepository disciplineRepository;
+
+        public HomeController()
+        {
+            this.studentRepository = new StudentRepository(this.DbContext);
+            this.disciplineRepository = new DisciplineRepository(this.DbContext);
+        }
+
         // GET: Home
-        public ActionResult Index()
+        public   ActionResult Index()
         {
             return View();
         }
-        [HttpGet]
-        public Object GetAll()
-        {
-            
-            var ret = Json( stdrep.GetAllStudents(), JsonRequestBehavior.AllowGet);
-            return ret;
-        }
-        [HttpGet]
-        public object FindStudent(int id)
-        {
-             
-            var ret = Json(stdrep.GetStudent(id), JsonRequestBehavior.AllowGet);
-            return ret;
-        }
+
         [HttpGet]
         public object GetAllDisciplines()
         {
-            var ret = dsp.GetDerivedDisciplines();
+            var ret = disciplineRepository.GetDerivedDisciplines();
             return Json(ret, JsonRequestBehavior.AllowGet);
         }
-        [HttpPost]
-        public int AddNewStudent(Student data)
-        {
-            var x= this.stdrep.Insert(data);
-            return x.Id;
-        }
+
 
     }
 }

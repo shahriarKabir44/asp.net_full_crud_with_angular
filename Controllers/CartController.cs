@@ -7,12 +7,20 @@ using CrudApp2.Models;
 using CrudApp2.Repositories;
 namespace CrudApp2.Controllers
 {
-    public class CartController : Controller
+    public class CartController : BaseController
     {
         // GET: Cart
-        ProductRepository productRepository = new ProductRepository();
-        CartRepository cartRepository = new CartRepository();
-        StudentRepository studentRepository = new StudentRepository();
+        ProductRepository productRepository;
+        CartRepository cartRepository ;
+        StudentRepository studentRepository  ;
+
+        public CartController()
+        {
+            this.productRepository = new ProductRepository(this.DbContext);
+            cartRepository = new CartRepository(this.DbContext);
+            studentRepository = new StudentRepository(this.DbContext);
+        }
+
         [HttpGet]
         public Object GetCustomers(int pd)
         {

@@ -7,10 +7,16 @@ using CrudApp2.Models;
 using CrudApp2.Repositories;
 namespace CrudApp2.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController : BaseController
     {
-        StudentRepository studentRepository = new StudentRepository();
-        ProductRepository productRepository = new ProductRepository();
+        StudentRepository studentRepository;
+        ProductRepository productRepository;
+
+        public ProductController()
+        {
+            studentRepository = new StudentRepository(this.DbContext);
+            productRepository = new ProductRepository(this.DbContext);
+        }
 
         [HttpGet]
         public object GetProductsOf(int owner)

@@ -1,0 +1,35 @@
+<ng-template #modalData let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{ toggleModal.header}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table class="table table-hover  ">
+      <tbody *ngIf="this.toggleModal.dataType">
+        <tr>
+          <th>Name:</th>
+          <td> <input type="text" style="width:100%" [(ngModel)]="data.Name" placeholder="Name" autocomplete="off"
+              name="name" /> </td>
+        </tr>
+        <tr>
+          <th>Discipline</th>
+          <td>
+            <select name="discipline" [(ngModel)]="data.DisciplineId">
+              <option *ngFor="let dsp of disciplines" value={{dsp.DisciplineID}}> {{dsp.Name}} </option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>Email</th>
+          <td> <input type="text" style="width:100%" [(ngModel)]="data.Email" placeholder="Email" autocomplete="off"
+              name="email" /> </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="addNew()">Done!</button>
+  </div>
+</ng-template>

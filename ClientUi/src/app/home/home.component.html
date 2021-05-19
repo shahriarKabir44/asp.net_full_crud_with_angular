@@ -1,0 +1,29 @@
+<style>
+
+</style>
+<app-student-details></app-student-details>
+<div class="container">
+    <h3>Students List</h3>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Roll</th>
+                <th>Discipline</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let std of this.dataStorage.students">
+                <td>{{std. Name}}</td>
+                <td>{{std. Email}}</td>
+                <td>{{std. ID}}</td>
+                <td>{{std. Discipline}}</td>
+                <td> <button class=" btn btn-primary" onclick="openNav()" (click)="showDetails(std.ID)">See
+                        details</button> </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
