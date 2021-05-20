@@ -10,12 +10,16 @@ namespace CrudApp2.Repositories
     {
 
         DisciplineRepository disciplineRepository;
-
+        CartRepository cartRepository;
+        ProductRepository productRepository;
 
         public StudentRepository(MarketPlaceEntities2 baseContext) : base(baseContext)
         {
             System.Diagnostics.Debug.WriteLine("student Repository");
             disciplineRepository = new DisciplineRepository(baseContext);
+            this.cartRepository = new CartRepository(baseContext);
+            this.productRepository = new ProductRepository(baseContext);
+
         }
 
         public List<DerivedStudent> GetAllStudents()
@@ -81,10 +85,15 @@ namespace CrudApp2.Repositories
         }
         public int DeleteSutdent(int id)
         {
-            // IEnumerable<Cart> carts = this.context.Cart.Where(x => x.BuyerId == id).ToList();
+            this.cartRepository.RemoveUserFromCart(id);
 
-            // this.context.Cart.RemoveRange(carts);
-            //this.context.SaveChanges();
+            IEnumerable<Product> pds = this.context.Product.Where(x => x.OwnerId == id).ToList();
+            foreach(var pd in pds)
+            {
+                this.cartRepository.RemoveProduct(pd.Id);
+            }
+            this.productRepository.DeleteAllProductsOfAUser(id);
+            this.Delete(id);
             return 1;
         }
 

@@ -8,5 +8,8 @@ export class ApiUirls {
   public static GetProductsOf: string = environment.rootUrl + 'Product/GetProductsOf/?owner='
   public static FindProduct: string = environment.rootUrl + "Product/FindProduct/?id="
   public static UpdateStudent: string = environment.rootUrl + "Student/Update"
-  public static DeleteStudent: string = environment.rootUrl+"Student/Delete/?id="
+  public static DeleteStudent: string = environment.rootUrl + "Student/Delete/?id=";
+  public static InsertProduct: string = environment.rootUrl + "Product/AddNew";
+  public static GetCustomersOfProduct: string = environment.rootUrl + "Cart/GetCustomers/?pd="
+  public static GetProductsAddedToCart: string = environment.rootUrl+"Cart/GetSubscribed/?id="
 }

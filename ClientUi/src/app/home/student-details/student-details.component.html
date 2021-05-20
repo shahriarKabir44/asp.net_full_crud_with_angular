@@ -1,81 +1,122 @@
 <style>
-  .hide{
-    display:none
+  .hide {
+    display: none
   }
 </style>
-
+<app-product-details  *ngIf="this.dataHolderService.currentlyViewingProduct!=null" ></app-product-details>
 <div id="mySidebar" *ngIf="this.dataHolderService.selectedStudentID && this.dataHolderService.currentStudent!=null" class="sidebar container" style="overflow-y:scroll">
   <a href="javascript:void(0)" class="closebtn" (click)="cliseSideBar()" onclick="closeNav()">×</a>
-  <h4>Details</h4>
-  <div class="container">
-    <table class="table table-hover">
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Roll</th>
-        <th>Discipline</th>
-      </tr>
-      <tr *ngIf="!isOnUpdateMode">
-        <td> {{this.dataHolderService.currentStudent.Name}} </td>
-        <td> {{this.dataHolderService.currentStudent.Email}} </td>
-        <td> {{this.dataHolderService.currentStudent.ID}} </td>
-        <td> {{this.dataHolderService.currentStudent.Discipline}} </td>
-
-      </tr>
-      <tr *ngIf="isOnUpdateMode">
-        <td> <input type="text" name="Name" [(ngModel)]="this.dataHolderService.currentStudent.Name" /> </td>
-        <td> <input type="text" name="Name" [(ngModel)]="this.dataHolderService.currentStudent.Email" /> </td>
-        <td> <input type="text" readonly name="Name" [(ngModel)]="this.dataHolderService.currentStudent.ID" /> </td>
-        <td>
-          <select name="discipline" [(ngModel)]="this.dataHolderService.currentStudent.DisciplineID">
-            <option *ngFor="let dsp of disciplines" value={{dsp.DisciplineID}}> {{dsp.Name}} </option>
-          </select>
-        </td>
-      </tr>
-      <tr *ngIf="!isOnUpdateMode && !isOndeleteMode">
-        <td> <button (click)="update()">Update</button> </td>
-        <td>  <button (click)="delete()">Delete</button> </td>
-      </tr>
-      <tr *ngIf="isOnUpdateMode && !isOndeleteMode">
-        <td> <button (click)="confirmUpdate()">Done</button> </td>
-        <td>  <button (click)="cancelUpdate()">Cancel</button> </td>
-      </tr>
-      <tr *ngIf="!isOnUpdateMode && isOndeleteMode">
-        <td> <button (click)="confirmDelete()">Delete</button> </td>
-        <td>  <button (click)="cancelDelete()">Cancel</button> </td>
-      </tr>
-    </table>
-    <hr>
-    <h3>Products Owned</h3>
-    <table class="table table-hover">
-      <thead>
+  <div>
+    
+    <h4>Details</h4>
+    <div class="container">
+      <table class="table table-hover">
         <tr>
           <th>Name</th>
-
+          <th>Email</th>
+          <th>Roll</th>
+          <th>Discipline</th>
         </tr>
-      </thead>
-      <tbody id="DetailsProductsTable">
-      </tbody>
-    </table>
+        <tbody>
+          <tr *ngIf="!isOnUpdateMode">
+            <td> {{this.dataHolderService.currentStudent.Name}} </td>
+            <td> {{this.dataHolderService.currentStudent.Email}} </td>
+            <td> {{this.dataHolderService.currentStudent.ID}} </td>
+            <td> {{this.dataHolderService.currentStudent.Discipline}} </td>
 
-    <footer>
-      <h4>Add new product</h4>
-      <button class="btn btn-primary" data-target="#addProductCollapse" data-toggle="collapse" aria-expanded="false"
-        aria-controls="addProductCollapse">
-        Add new product
-      </button>
-      <div id="addProductCollapse" class="collapse">
-        <form id="addNewProductMorm" class="form-inline">
-          <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" name="name" id="newProductName" class="form-control" placeholder="Name">
+          </tr>
+          <tr *ngIf="isOnUpdateMode">
+            <td> <input type="text" name="Name" [(ngModel)]="this.dataHolderService.currentStudent.Name" /> </td>
+            <td> <input type="text" name="Name" [(ngModel)]="this.dataHolderService.currentStudent.Email" /> </td>
+            <td> <input type="text" readonly name="Name" [(ngModel)]="this.dataHolderService.currentStudent.ID" /> </td>
+            <td>
+              <select name="discipline" [(ngModel)]="this.dataHolderService.currentStudent.DisciplineID">
+                <option *ngFor="let dsp of disciplines" value={{dsp.DisciplineID}}> {{dsp.Name}} </option>
+              </select>
+            </td>
+          </tr>
+          <tr *ngIf="!isOnUpdateMode && !isOndeleteMode">
+            <td> <button class="btn btn-primary" (click)="update()">Update</button> </td>
+            <td> <button class="btn-danger btn" (click)="delete()">Delete</button> </td>
+          </tr>
+          <tr *ngIf="isOnUpdateMode && !isOndeleteMode">
+            <td> <button class="btn btn-success" (click)="confirmUpdate()">Done</button> </td>
+            <td> <button class="btn btn-danger" (click)="cancelUpdate()">Cancel</button> </td>
+          </tr>
+          <tr *ngIf="!isOnUpdateMode && isOndeleteMode">
+            <td> <button class="btn btn-danger" (click)="confirmDelete()">Delete</button> </td>
+            <td> <button class="btn btn-info" (click)="cancelDelete()">Cancel</button> </td>
+          </tr>
+        </tbody>
+        
+      </table>
+      <hr>
+
+      <div class="  d-flex justify-content-between">
+        <h3>Products Owned</h3>
+        <div>
+          <h4>Add new product</h4>
+          <button class="btn btn-primary" *ngIf="!isOnInsertMode" (click)="insertMode()"
+            data-target="#addProductCollapse" data-toggle="collapse" aria-expanded="false"
+            aria-controls="addProductCollapse">
+            Add new product
+          </button>
+          <button class="btn btn-danger" *ngIf="isOnInsertMode" (click)="cancelInsertMode()"
+            data-target="#addProductCollapse" data-toggle="collapse" aria-expanded="false"
+            aria-controls="addProductCollapse">
+            Cancel
+          </button>
+          <div id="addProductCollapse" class="collapse">
+            <form id="addNewProductMorm" class="form-inline">
+              <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" name="name" [(ngModel)]="this.newProduct.Name" id="newProductName"
+                  class="form-control" placeholder="Name">
+              </div>
+
+
+              <button type="submit" class="btn btn-primary btn-sm" (click)="confirmAddNew()">Confirm</button>
+            </form>
           </div>
+        </div>
 
-
-          <button type="submit" class="btn btn-primary btn-sm">Submit</button>
-        </form>
       </div>
-    </footer>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let own of this.dataHolderService.productsOfCurrentSudent ">
+          <tr>
+            <td> {{own.Name}} </td>
+            <td> <button class="btn btn-primary" (click)="showDetails( own )"> Details </button> </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <hr>
+      <hr />
+      <h3>Products Added to cart</h3>
+      <table class="table table-hover"  border="1">
+        <tr>
+          <th>Name</th>
+          <th>Offered</th>
+          <th>Action</th>
+        </tr>
+        <tbody>
+          <tr *ngFor="let n of this.dataHolderService.currentlyViewingSubscribedProducts">
+            <td> {{n.ProductName}} </td>
+            <td> {{n.Offer}} </td>
+            <td> <button class="btn btn-primary" (click)="showSubscribedProductDetails( n )"> Details </button> </td>
+          </tr>
+        </tbody>
+        
+      </table>
+    </div>
   </div>
+
 
 </div>

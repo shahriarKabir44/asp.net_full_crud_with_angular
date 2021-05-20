@@ -26,6 +26,11 @@ namespace CrudApp2.Controllers
         {
             return Json(cartRepository.GetCustomers(pd),JsonRequestBehavior.AllowGet);
         }
+        public object GetSubscribed(int id)
+        {
+            var x = this.cartRepository.GetSubscribed(id);
+            return Json(x, JsonRequestBehavior.AllowGet);
+        }
 
     }
 }

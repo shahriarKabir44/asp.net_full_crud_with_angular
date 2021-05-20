@@ -8,13 +8,17 @@ namespace CrudApp2.Repositories
 {
     public class ProductRepository : Repository<Product>
     {
-        StudentRepository std;
+        public void DeleteAllProductsOfAUser(int owner)
+        {
+
+            IEnumerable<Product> products = this.context.Product.Where(x => x.OwnerId == owner).ToList();
+            this.context.Product.RemoveRange(products);
+            this.context.SaveChanges();
+        }
 
         public ProductRepository(MarketPlaceEntities2 baseContext) : base(baseContext)
         {
             System.Diagnostics.Debug.WriteLine("prodct Repository");
-
-            std = new StudentRepository(baseContext);
         }
 
         public List<DerivedProduct> FindByOwner(int owner)
@@ -36,16 +40,27 @@ namespace CrudApp2.Repositories
         public DerivedProduct FindByID(int id)
         {
 
-            var pd = this.Get(id);
-            var owner = std.Get(pd.OwnerId);
+            var pd = this.context.Product.Include("Student").Where(x => x.Id == id).FirstOrDefault();
             return new DerivedProduct
+            {
+                Name = pd.Student.Name,
+                ID = pd.Id,
+                Owner = pd.OwnerId,
+                OwnerName = pd.Student.Name
+            };
+
+        }
+        public DerivedProduct AddNew(Product product)
+        {
+            var pd = this.Insert(product);
+            var owner = this.context.Student.Where(x => x.Id == pd.OwnerId).FirstOrDefault();
+            return new DerivedProduct()
             {
                 Name = pd.Name,
                 ID = pd.Id,
-                Owner = owner.Id,
+                Owner = pd.OwnerId,
                 OwnerName = owner.Name
             };
-
         }
 
     }

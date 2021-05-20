@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CartService } from '../services/cart.service';
 import { DataHolderService } from '../services/data-holder.service';
+import { ProductService } from '../services/product.service';
 import { StudentService } from '../services/student.service';
 
 @Component({
@@ -11,7 +13,9 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private studentData: StudentService,
-    public dataStorage: DataHolderService
+    public dataStorage: DataHolderService,
+    public productService: ProductService,
+    private cartService: CartService
   ) { }
 
   studentList: any[] = []
@@ -24,10 +28,14 @@ export class HomeComponent implements OnInit {
       })
   }
   showDetails(x: any) {
-    
-    this.studentData.getStudent(x).subscribe(data => {
-      this.dataStorage.currentStudent = data
-      this.dataStorage.selectedStudentID = x
+    this.cartService.getProductsAddedToCart(x).subscribe(res => {
+      this.studentData.getStudent(x).subscribe(data => {
+        this.dataStorage.currentStudent = data
+        this.dataStorage.selectedStudentID = x
+
+        this.productService.getAllOfStudent().subscribe(resp => { })
+      })
     })
+
   }
 }

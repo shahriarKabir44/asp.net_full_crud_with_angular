@@ -1,0 +1,36 @@
+<ng-template .modal-lg  #modalData let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">efewew</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h3>Product details</h3>
+    <table class="table table-hover  ">
+      <tbody *ngIf="!isOnDeleteMode && !isOnEditMode">
+        <tr> <th>Name</th> <td> {{this.currentProduct.ProductName}} </td> </tr>
+        <tr> <th> Owner </th> <td> {{this.currentProduct.OwnerName}} </td> </tr>
+        <tr> <td> <button class="btn btn-primary">Edit</button> </td>  <td> <button class="btn btn-danger">Delete</button> </td> </tr>
+      </tbody>
+      <tbody *ngIf="!isOnDeleteMode && isOnEditMode">
+        <tr> <th>Name</th> <td> <input type="text" autocomplete="off"  name="name" [(ngModel)]="this.currentProduct.ProductName"> </td> </tr>
+        <tr> <th> Owner </th> <td> {{this.currentProduct.OwnerName}} </td> </tr>
+        <tr> <td> <button class="btn btn-success">Done</button> </td>  <td> <button class="btn btn-danger">cancel</button> </td> </tr>
+      </tbody>
+    </table>
+    <hr />
+    <h3>Customers of this product</h3>
+    <table class="table table-hover">
+      <tr> <th>Name</th> <th>Email</th> <th>Discipline</th> <th>Offer</th> </tr>
+      <tbody>
+        <tr *ngFor="let buyer of this.customers">
+          <td>{{buyer.BuyerName}}</td> <td>{{buyer.BuyerEmail }}</td> <td>{{buyer.BuyerDiscipline }}</td> <td>{{buyer.Offer }}</td> 
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="modal.dismiss('Cross click')" >Close!</button>
+  </div>
+</ng-template>

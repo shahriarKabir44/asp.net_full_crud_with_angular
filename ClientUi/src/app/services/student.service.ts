@@ -17,7 +17,7 @@ export class StudentService {
     return this.http
       .get<any>(ApiUirls.GetAllStudents).pipe(map(resp => {
         this.dataHolder.students = resp;
-        
+
         return resp;
       }),
         catchError(error => {
@@ -28,9 +28,9 @@ export class StudentService {
   }
   getStudent(id: number) {
     return this.http
-      .get<any>(ApiUirls.GetStudentById+id).pipe(map(resp => {
+      .get<any>(ApiUirls.GetStudentById + id).pipe(map(resp => {
         this.dataHolder.selectedStudentID = resp.ID;
-        this.dataHolder.currentStudent=resp
+        this.dataHolder.currentStudent = resp
         return resp;
       }),
         catchError(error => {
@@ -59,24 +59,24 @@ export class StudentService {
   }
 
   delete() {
-     return this.http
+    return this.http
       .get<any>(ApiUirls.DeleteStudent + this.dataHolder.selectedStudentID).pipe(map(resp => {
         if (resp) {
-          
+
           var index = 0;
+          var temp = []
           for (let n = 0; n < this.dataHolder.students.length; n++) {
 
-            if (this.dataHolder.students[n].ID == this.dataHolder.selectedStudentID) {
-            index = n;
-            break;
+            if (this.dataHolder.students[n].ID != this.dataHolder.selectedStudentID) {
+              temp.push(this.dataHolder.students[n])
+            }
           }
-        }
-          this.dataHolder.students = this.dataHolder.students.splice(index, 1);
+          this.dataHolder.students = temp;
           this.dataHolder.selectedStudentID = 0;
 
           this.dataHolder.currentStudent = null;
         }
-        
+
         return resp;
       }),
         catchError(error => {

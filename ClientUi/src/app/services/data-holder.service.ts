@@ -7,6 +7,11 @@ import { StudentModel } from '../Models/StudentModel';
 export class DataHolderService {
   students: StudentModel[] = []
   selectedStudentID = 0;
-  currentStudent: StudentModel|null = null
+  productsOfCurrentSudent: any[]=[];
+  currentStudent: StudentModel | null = null
+  currentlyViewingProduct: any = null;
+  currentlyViewingCustomers: any[] = []
+
+  currentlyViewingSubscribedProducts:any[]=[]
   constructor() { }
 }

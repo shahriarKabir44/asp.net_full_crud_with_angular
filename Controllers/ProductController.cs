@@ -31,6 +31,10 @@ namespace CrudApp2.Controllers
             var x = productRepository.FindByID(id);
             return Json(x, JsonRequestBehavior.AllowGet);
         }
-
+        public object AddNew(Product product)
+        {
+            var ret = this.productRepository.AddNew(product);
+            return Json(ret, JsonRequestBehavior.AllowGet);
+        }
     }
 }
